@@ -75,6 +75,7 @@ ______                    _
 9. CHALLENGE - Run `FastQC` on your trimmed data. Comment on differences you observe between the trimmed and untrimmed data. Include any figures needed to support your conclusions.
 
 # Part 3 – Alignment and strand-specificity
+
 10. Install sofware (record details in lab notebook!!!). In your QAA environment, use conda to install:
     - star
     - numpy
