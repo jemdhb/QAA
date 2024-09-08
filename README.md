@@ -77,16 +77,22 @@ ______                    _
 # Part 3 – Alignment and strand-specificity
 
 10. Install sofware (record details in lab notebook!!!). In your QAA environment, use conda to install:
-    - star
-    - numpy
-    - matplotlib
-    - htseq
+    - star: 2.7.11b
+      - command used: conda install STAR
+    - numpy: 1.26.4
+      - command used: conda install numpy --> already installed
+    - matplotlib: 3.9.2
+      - command used: conda install matplotlib --> already installed
+    - htseq: 2.0.5  
+      - command used: conda install htseq
+
+After this step all of my package versions on QAA (conda list) are listed in `all_packages.txt`
 
 11. Find publicly available mouse genome fasta files (Ensemble release 112) and generate an alignment database from them. Align the reads to your mouse genomic database using a splice-aware aligner. Use the settings specified in PS8 from Bi621.
 
   > [!IMPORTANT]
   > You will need to use gene models to perform splice-aware alignment, see PS8 from Bi621.
-    
+
 12. Using your script from PS8 in Bi621, report the number of mapped and unmapped reads from each of your 2 sam files. Make sure that your script is looking at the bitwise flag to determine if reads are primary or secondary mapping (update/fix your script if necessary).
 
 13. Count reads that map to features using `htseq-count`. You should run htseq-count twice: once with `--stranded=yes` and again with `--stranded=reverse`. Use default parameters otherwise.

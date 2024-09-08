@@ -1,3 +1,9 @@
+htseq_count_part3/logs/
+mouse_genome_part3/
+output_trimmomatic_plotting_part2/*.txt
+STAR_mouse_aln_part3/R2_2x_34_4H_mouse_aln/
+STAR_mouse_aln_part3/*.out*
+*slurm*
 # bioinfo files
 *.fastq
 *.fastq.gz
