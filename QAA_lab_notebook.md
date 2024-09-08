@@ -749,3 +749,4 @@ My reverse strand htseq-count produced much more gene-mapped reads
 add table with percent mapped reads
 
 - If our protocol was stranded,`htseq-count` stranded=reverse and stranded=yes  would have produced very similar output. But because the outputs 
+
