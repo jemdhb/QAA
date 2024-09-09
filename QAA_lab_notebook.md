@@ -77,13 +77,13 @@ With this I verified the record length was 101 for **every** file I was assigned
 Command used 
 
 ```bash
-/usr/bin/time -v fastqc -o output_FASTQC_part1/ -t 8 /projects/bgmp/shared/2017_sequencing/demultiplexed/34_4H_both_S24_L008_R1_001.fastq.gz /projects/bgmp/shared/2017_sequencing/demultiplexed/34_4H_both_S24_L008_R2_001.fastq.gz /projects/bgmp/shared/2017_sequencing/demultiplexed/21_3G_both_S15_L008_R1_001.fastq.gz /projects/bgmp/shared/2017_sequencing/demultiplexed/21_3G_both_S15_L008_R2_001.fastq.gz
+/usr/bin/time -v fastqc -o timing/ -t 8 /projects/bgmp/shared/2017_sequencing/demultiplexed/34_4H_both_S24_L008_R1_001.fastq.gz /projects/bgmp/shared/2017_sequencing/demultiplexed/34_4H_both_S24_L008_R2_001.fastq.gz /projects/bgmp/shared/2017_sequencing/demultiplexed/21_3G_both_S15_L008_R1_001.fastq.gz /projects/bgmp/shared/2017_sequencing/demultiplexed/21_3G_both_S15_L008_R2_001.fastq.gz
 
 #with timing
-Elapsed (wall clock) time (h:mm:ss or m:ss): 1:07.62
-Maximum resident set size (kbytes): 2470100
+Percent of CPU this job got: 97%
+Elapsed (wall clock) time (h:mm:ss or m:ss): 2:33.07
+Maximum resident set size (kbytes): 480804
 Average resident set size (kbytes): 0
-Major (requiring I/O) page faults: 39
 Exit status: 0
 ```
 
