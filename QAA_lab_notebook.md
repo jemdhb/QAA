@@ -179,14 +179,16 @@ speed this up.
 ##### 34_4H_both_S24_L008_R1_001 Means
 
 ```bash
+#command
 /usr/bin/time -v python /home/jujo/bgmp/bioinfo/PS/Demultiplex/Assignment-the-first/part1.py \
 -f /projects/bgmp/shared/2017_sequencing/demultiplexed/34_4H_both_S24_L008_R1_001.fastq.gz \
 -R2 False > 34_4H_R1_means.txt
-
-Elapsed (wall clock) time (h:mm:ss or m:ss): 5:11.11
-Maximum resident set size (kbytes): 28448
+#with the output
+Percent of CPU this job got: 99%
+Elapsed (wall clock) time (h:mm:ss or m:ss): 5:07.19
+Maximum resident set size (kbytes): 28628
 Average resident set size (kbytes): 0
-Exit status: 0
+Major (requiring I/O) page faults: 0
 ```
 
 ##### 34_4H_both_S24_L008_R1_001 Graphs
@@ -212,9 +214,9 @@ Exit status: 0
 /usr/bin/time -v python /home/jujo/bgmp/bioinfo/PS/Demultiplex/Assignment-the-first/part1.py \
 -f /projects/bgmp/shared/2017_sequencing/demultiplexed/34_4H_both_S24_L008_R2_001.fastq.gz \
 -R2 True > 34_4H_R2_means.txt
-
-Elapsed (wall clock) time (h:mm:ss or m:ss): 6:10.44
-Maximum resident set size (kbytes): 28380
+Percent of CPU this job got: 99%
+Elapsed (wall clock) time (h:mm:ss or m:ss): 5:17.67
+Maximum resident set size (kbytes): 28548
 Average resident set size (kbytes): 0
 Exit status: 0
 ```
@@ -240,10 +242,10 @@ Exit status: 0
 ```bash
 /usr/bin/time -v python /home/jujo/bgmp/bioinfo/PS/Demultiplex/Assignment-the-first/part1.py \
 -f /projects/bgmp/shared/2017_sequencing/demultiplexed/21_3G_both_S15_L008_R1_001.fastq.gz \
-> 21_3G_R1_means.txt
-
-Elapsed (wall clock) time (h:mm:ss or m:ss): 6:25.08
-Maximum resident set size (kbytes): 32720
+-R2 False> 21_3G_R1_means.txt
+Percent of CPU this job got: 99%
+Elapsed (wall clock) time (h:mm:ss or m:ss): 5:04.88
+Maximum resident set size (kbytes): 28760
 Average resident set size (kbytes): 0
 Exit status: 0
 ```
@@ -267,12 +269,15 @@ Exit status: 0
 #### 21_3G_both_S15_L008_R2_001 Means
 
 ```bash
+#command 
 /usr/bin/time -v python /home/jujo/bgmp/bioinfo/PS/Demultiplex/Assignment-the-first/part1.py \
 -f /projects/bgmp/shared/2017_sequencing/demultiplexed/21_3G_both_S15_L008_R2_001.fastq.gz \
 -R2 True > 21_3G_R2_means.txt
 
-Elapsed (wall clock) time (h:mm:ss or m:ss): 6:24.46
-Maximum resident set size (kbytes): 28624
+#with the output
+Percent of CPU this job got: 99%
+Elapsed (wall clock) time (h:mm:ss or m:ss): 5:08.32
+Maximum resident set size (kbytes): 28664
 Average resident set size (kbytes): 0
 Exit status: 0
 ```
