@@ -109,9 +109,6 @@ N-content stays extremely low throughout the reads, even at the susceptible earl
 
 Average quality is worse at the lower positions, while quality score variation increases at 31-32 and 72-101. All median qualities lie within the acceptable region. The outlier qualities at positions 31-32 and 72-101 are something to look out for when examining other metrics.
 
-Because of how low our N content is, 
-
-
 ## My Quality Score Script
 ### 21_3G 
 
@@ -182,7 +179,6 @@ Table 8: FASTQC vs. my data usage
 CPU usage was consistent across runs, with FASTQC using slightly less CPU than my own code. This difference is slight enough to be insignificant. 
 
 ### Comment on overall data quality\
-**Comment on the overall data quality of your two libraries. Go beyond per-base qscore distributions. Make and justify a recommendation on whether these data are of high enough quality to use for further analysis.**
 
 #### 21_3G Overall quality\
 
@@ -204,10 +200,10 @@ Table 9: FASTQC Calls on all metrics
 
 
 ##### Per base sequence quality, Per base N content\
-This metric is not a concern with this data. See FASTQC section above for more information.
+This metric is not a concern with this data. See **FASTQC** section above for more information.
 
 ##### Sequence Length Distribution\
-All sequences were length 101. See File assignments section above for more information.
+All sequences were length 101. See **File assignments** section above for more information.
 
 ##### Sequence duplication levels\
 Because this is an RNA-seq experiment, we don't care about sequence duplication levels. In RNA-seq, sequence duplication imparts differential expression.
@@ -218,7 +214,7 @@ Both R1 and R2 failed this metric, lets examine the tile results in more detail.
 ```{r, echo=F,fig.pos="H",fig.cap='Per tile sequence quality for 21\\_3G',fig.subcap=c('R1: Fail', 'R2: Fail'), out.width='.49\\linewidth', fig.asp=1, fig.ncol = 2}
 knitr::include_graphics(c("output_FASTQC_part1/21_3G_both_S15_L008_R1_001_fastqc/Images/per_tile_quality.png","output_FASTQC_part1/21_3G_both_S15_L008_R2_001_fastqc/Images/per_tile_quality.png"))
 ```
-An ideal per-tile quality plot should be completely blue (high quality). Here our R1 file has some low quality hotspots from the 3' and 5' end of reads constructed in tile 2219. This cell constructed a small proportion of our total R1 reads. Though R2 has more middling quality tiles, its number of consistently low-quality tiles is small (2201, 2204). Thus, I would not consider tile-quality to be a concern for our data. 
+An ideal per-tile quality plot should be completely blue (high quality). Here our R1 file has some low quality hotspots from the 3' and 5' end of reads constructed in tile 2219. This tile constructed a small proportion of our total R1 reads. Though R2 has more middling quality tiles, its number of consistently low-quality tiles is small (2201, 2204). Thus, I would not consider tile-quality to be a concern for our data. 
 
 ### Per base sequence content\ 
 
@@ -235,24 +231,24 @@ knitr::include_graphics(c("output_FASTQC_part1/21_3G_both_S15_L008_R1_001_fastqc
 For both R1 and R2, our GC content closely follows the theoretical distribution provided by FASTQC. The center of our distribution is a bit higher than the theoretical distribution, but as this is the value where our nucleotides are balanced (50%) this is not problematic. Thus, GC content is likely not an area of concern here. 
 
 
-##### Overrepresented sequences
+#### Overrepresented sequences
 
 |File| Source |	Count|Percentage|
 |----|--------|-------|-----------|
 |R1| TruSeq Adapter, Index 18|	29130|	0.32|
 |R2| Illumina Single End Sequencing Primer|	30251|	0.33|
 
-Though we got a warning for R1 and R2, I would not call this data problematic (even though 21_3G has more overrepresented sequences than 34_4H). Both of our over represented sequences are known adapters, and thus will be captured and trimmed downstream with cutadapt. Thus over represented sequences are not an area of concern for our data. 
+Though we got a warning for R1 and R2, I would not call this data problematic (even though 21_3G has more overrepresented sequences than 34_4H). Both of our over represented sequences are known adapters, and thus will be captured and trimmed downstream with `cutadapt`. Thus over represented sequences are not an area of concern for our data. 
 
 
-#### Adapter Content	
+### Adapter Content	
 ```{r, echo=F,fig.pos="H",fig.cap='Adapter content 21\\_3G',fig.subcap=c('R1', 'R2'), out.width='.49\\linewidth', fig.asp=1, fig.ncol = 2}
 knitr::include_graphics(c("output_FASTQC_part1/21_3G_both_S15_L008_R1_001_fastqc/Images/adapter_content.png","output_FASTQC_part1/21_3G_both_S15_L008_R2_001_fastqc/Images/adapter_content.png"))
 ```
 As you approach the 3' end of our read, adapter content does increase. In both
 our R1 and R2 files this difference is slight. Furthermore, the vast majority of
 this adapter content is the Illumina universal adapter which will be trimmed with
-cutadapt. Thus, adapter content is not a concern for this dataset. 
+`cutadapt`. Thus, adapter content is not a concern for this dataset. 
 
 ####  21_3G Final reccomendation
 \
@@ -281,11 +277,11 @@ Table 9: FASTQC Calls on all metrics
 
 
 ##### Per base sequence quality, Per base N content\
-Overall, this metric is not a concern with this data. See FASTQC section above
+Overall, this metric is not a concern with this data. See **FASTQC** section above
 for more information.
 
 ##### Sequence Length Distribution\
-All sequences were length 101. See File assignments section above for more
+All sequences were length 101. See ***File assignments** section above for more
 information.
 
 ##### Sequence duplication levels\
@@ -298,7 +294,7 @@ Both R1 and R2 failed this metric, lets examine the tile results in more detail.
 ```{r, echo=F,fig.pos="H",fig.cap='Per tile sequence quality for 34\\_4H',fig.subcap=c('R1: Fail', 'R2: Fail'), out.width='.49\\linewidth', fig.asp=1, fig.ncol = 2}
 knitr::include_graphics(c("output_FASTQC_part1/34_4H_both_S24_L008_R1_001_fastqc/Images/per_tile_quality.png","output_FASTQC_part1/34_4H_both_S24_L008_R2_001_fastqc/Images/per_tile_quality.png"))
 ```
-An ideal per-tile quality plot should be completely blue (high quality). Here our R1 file has some low quality hotspots from the 3' and 5' end of reads constructed in tile 2219 and 22222. These cells constructed a small proportion of our total R1 reads. Though R2 has more middling quality tiles, its number of low-quality tiles is small. Thus, I would not consider tile-quality to be a concern for our data here. 
+An ideal per-tile quality plot should be completely blue (high quality). Here our R1 file has some low quality hotspots from the 3' and 5' end of reads constructed in tile 2219 and 22222. These tiles constructed a small proportion of our total R1 reads. Though R2 has more middling quality tiles, its number of low-quality tiles is small. Thus, I would not consider tile-quality to be a concern for our data here. 
 
 ### Per base sequence content\
 
@@ -337,7 +333,7 @@ Both of our over represented sequences are known adapters, and will be captured
 and trimmed downstream with `cutadapt`. Thus overrepresented sequences are not 
 an area of concern for our data. 
 
-### Adapter Content	
+### Adapter Content\	
 ```{r, echo=F,fig.pos="H",fig.cap='Adapter content 34\\_4H',fig.subcap=c('R1: Pass', 'R2: Pass'), out.width='.49\\linewidth', fig.asp=1, fig.ncol = 2}
 knitr::include_graphics(c("output_FASTQC_part1/34_4H_both_S24_L008_R1_001_fastqc/Images/adapter_content.png","output_FASTQC_part1/34_4H_both_S24_L008_R2_001_fastqc/Images/adapter_content.png"))
 ```
@@ -382,10 +378,10 @@ With my adapters determined, I could proceed to actually running `cutadapt`
 ##### Cutadapt results
 |File name|Percent adapter trimmed|
 |---------|--------|
-|21_3G_R1|6.6%|
-|21_3G_R2|7.4%|
-|34_4H_R1| 9.1%|
-|34_4H_R2| 9.8%|
+|21_3G_R1|6.6|
+|21_3G_R2|7.4|
+|34_4H_R1| 9.1|
+|34_4H_R2| 9.8|
 \begin{center}
 \textit{Table 10: Percentage of file requiring adapter trimming}
 \end{center}
@@ -393,62 +389,73 @@ With my adapters determined, I could proceed to actually running `cutadapt`
 
 #### Cutadapt interpretation
 \
-As discussed in the `34_4H Overall quality` section, my `34_4H` data had higher adapter content (and were trimmed more) than my `21_3G` data. Thus, it is not surprising that my `34_4H` files were more adapter trimmed than my `21_3G` files. Nevertheless, in all my assigned files, the percent that needed to be adapter trimmed were relatively low. In both `21_3G` and `34_4H` our R2 files were trimmed more than our R1 files. This makes sense because R2 runs last on the sequencer and is typically lower quality than R1. For more information on why R2 files were more trimmed than R1 files see the section **R1 and R2 adapter trimmed at different rates?** below.
+As discussed in the **34_4H Overall quality** section, my `34_4H` data had higher adapter content (and were trimmed more) than my `21_3G` data. Thus, it is not surprising that my `34_4H` files were more adapter trimmed than my `21_3G` files. Nevertheless, in all my assigned files, the percent that needed to be adapter trimmed were relatively low. In both `21_3G` and `34_4H` our R2 files were trimmed more than our R1 files. This makes sense because R2 runs last on the sequencer and is typically lower quality than R1. For more information on why R2 files were more trimmed than R1 files see the section **R1 and R2 adapter trimmed at different rates?** below.
 
 
 ### Trimmomatic
 
-With our adapters removed, our data is now ready for Trimmomatic
+With our adapters removed, our data is now ready for `Trimmomatic`
+
+|File| Percent trimmed|
+|-----|---------------|
+|21_3G_R1| 10.8 |
+|21_3G_R2| 17.3|
+|34_4H_R2| 13.1|
+|34_4H_R2| 18.6|
+\begin{center}
+\textit{Table 11: Percentage of reads that have been trimmed (including adapter trimming)} 
+\end{center}
+
+R1 files were trimmed more than R2 files and that `21_3G` had lower trimming levels than `34_4H`. This difference in trimming is unsurprising given our `FASTQC` quality assessment above. 
 
 ```{r, echo=F,out.width="45%", out.height="30%",fig.cap="Read length distribution by file",fig.show='hold',fig.align='center'}
 
 knitr::include_graphics(c("output_trimmomatic_plotting_part2/21_3G_trimmed.png","output_trimmomatic_plotting_part2/34_4H_trimmed.png"))
 ```
 
+The summary statistics in Table 11 translate over into Figure 15. The R2 bins are consistently taller than our R1 bins (save for when no trimming was performed), while the `21_3G` graph has more reads at the no trimming performed bin than `34_4H`.
+
 #### R1 and R2 adapter trimmed at different rates? \
-R2 files should be adapter trimmed at higher rates than R1 files because R2 files are completed at the end of the run. As the run continues reagents and the signal degrade. Signal degradation causes adapter bases to be called over the insert bases, causing adapters to be overrepresented. This contributes to the overall lowering of run quality, which we can see from our FASTQ output above.
+R2 files should be adapter trimmed at higher rates than R1 files because R2 files are completed at the end of the run. As the run continues reagents and the signal degrade. Signal degradation causes adapter bases to be called over the insert bases, causing adapters to be over represented. This contributes to the overall lowering of run quality, which we can see from our FASTQ output above.
 
 ## Part 3
-#### Genome generate :angel:
+#### Genome generate
 
 #### Align reads
 
-|Replicate| Mapped reads| Unmapped reads| % mapped |
-|---------|--------------|--------------|----------|
-|21_3G|15,125,868|2,580,756|85.4|
-|34_4H|15,631,049|1,675,233|90.3|
+|Replicate| Mapped reads| Unmapped reads| % mapped | % unmapped|
+|---------|--------------|--------------|----------|-----------|
+|21_3G|15,125,868|2,580,756|85.4| 14.6|
+|34_4H|15,631,049|1,675,233|90.3| 9.7|
 \begin{center}
-\textit{Table 11: Percentage of mapped reads by replicate}
+\textit{Table 12: Percentage of mapped reads by replicate}
 \end{center}
 
 
 ## Determining standedness
 
-I propose that both my 21_3G and 34_4H libraries are stranded. The reasoning behind this determination is clear once one examines the htseq-count output in detail.
+I propose that both my `21_3G` and `34_4H` libraries are stranded. The reasoning behind this determination is clear once one examines the `htseq-count` output in detail.
 
 ### 21_3G
 
 ```{r, echo=F,out.width="50%", out.height="40%",fig.subcap=c("Forward strand","Reverse strand"),fig.cap="Number of genes mapped X times by strand",fig.show='hold',fig.align='center'}
-knitr::include_graphics(c("htseq_count_part3/21G_stranded_yes.png","htseq_count_part3/21G_stranded_reverse.png"))
+knitr::include_graphics(c("htseq_count_part3/graphing_output/21G_stranded_yes.png","htseq_count_part3/graphing_output/21G_stranded_reverse.png"))
 ```
-If our data was unstranded, the number of genes mapped to specific runs would be the same whether the strand direction was set to forward or reverse. This is not the case: visually the reverse strand plot has much more data mapped than the forward strand plot. Numerically 303,726 reads mapped on the forward strand and 6,636,009 reads mapped on the reverse strand. This 2084.87% increase 
+If our data was unstranded, the number of genes mapped to specific runs would be the same whether the strand direction was set to forward or reverse. This is not the case: visually the reverse strand plot has much more data mapped than the yes (forward) strand plot. Numerically 303,726 reads mapped on the forward strand and 6,636,009 reads mapped on the reverse strand. This 2084.87% increase could not happen by chance. Still, lets zoom out on our `htseq-count` data and view our output categorically by strand. 
 
 ```{r, echo=F,out.width="50%", out.height="40%",fig.subcap=c("Forward strand","Reverse strand"),fig.cap="Number of reads within each category",fig.show='hold',fig.align='center'}
-knitr::include_graphics(c("htseq_count_part3/cats_21G_stranded_yes.png","htseq_count_part3/cats_21G_stranded_reverse.png"))
+knitr::include_graphics(c("htseq_count_part3/graphing_output/cats_21G_stranded_yes.png","htseq_count_part3/graphing_output/cats_21G_stranded_reverse.png"))
 ```
-In the forward strand data, "no feature" dominates our read categories. In the reverse strand data, "mapped" dominates our read categories. This indicates that our data is stranded in the **reverse** direction.
+This graph demonstrates how many reads mapped to each possible `htseq-count` category. In the yes (forward) strand data, *no feature* dominates our read categories. In the reverse strand data, *mapped* dominates our read categories. This categorical examination again clearly indicates that our data is stranded in the **reverse** direction.
 
 ### 34_4H
 
 ```{r, echo=F,out.width="50%", out.height="40%",fig.subcap=c("Forward strand","Reverse strand"),fig.cap="Number of genes mapped X times by strand",fig.show='hold',fig.align='center'}
-knitr::include_graphics(c("htseq_count_part3/34_4H_stranded_yes.png","htseq_count_part3/34_4H_stranded_reverse.png"))
+knitr::include_graphics(c("htseq_count_part3/graphing_output/34_4H_stranded_yes.png","htseq_count_part3/graphing_output/34_4H_stranded_reverse.png"))
 ```
-The same as was mentioned for `21_3G` holds true for `34_4H`. If our data was unstranded, the number of genes mapped to specific runs would be the same whether the strand direction was set to forward or reverse. This is not the case: visually the reverse strand plot has much more data mapped than the forward strand plot. Numerically, 
+The same as was mentioned for `21_3G` holds true for `34_4H`. If our data was unstranded, the number of genes mapped to specific runs would be the same whether the strand direction was set to yes (forward) or reverse. This is not the case: visually the reverse strand plot has much more data mapped than the forward strand plot. Numerically, 449,409 reads mapped on the forward strand while 6,837,824 reads mapped on the reverse strand. This is a 1421.51% increase in read mapping, which could simply not occur by chance. 
 
 ```{r, echo=F,out.width="50%", out.height="40%",fig.subcap=c("Forward strand","Reverse strand"),fig.cap="Number of reads within each category",fig.show='hold',fig.align='center'}
-knitr::include_graphics(c("htseq_count_part3/cats_34_4H_stranded_yes.png","htseq_count_part3/cats_34_4H_stranded_reverse.png"))
+knitr::include_graphics(c("htseq_count_part3/graphing_output/cats_34_4H_stranded_yes.png","htseq_count_part3/graphing_output/cats_34_4H_stranded_reverse.png"))
 ```
-
-
-As mentioned in `21_3G`, in the forward strand data "no feature" dominates our read categories. In the reverse strand data, "mapped" dominates our read categories. This indicates that our data is stranded in the **reverse** direction.
-
+As mentioned in `21_3G`, this graph demonstrates how many reads mapped to each possible `htseq-count` category. In the yes (forward) strand data, *no feature* dominates our read categories. In the reverse strand data, *mapped* dominates our read categories.  Though this trend is slighter here in the `34_4H` data, this is still conclusive evidence that our data is stranded in the **reverse** direction.
