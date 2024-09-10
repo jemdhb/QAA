@@ -1,3 +1,5 @@
+# Check where_stuff_is_md for file locations :smile:
+
 # RNA-seq Quality Assessment Assignment - Bi 623 (Summer 2024)
 
 Be sure to upload all relevant materials by the deadline and **double check** to be sure that your offline repository is up-to-date with your online repository. Answers to questions should be included in your final, high-level, report as a `pdf`. This pdf should be generated using Rmarkdown and submitted to Canvas as well as GitHub. Be sure to keep a well-organized, detailed lab notebook!

@@ -9,11 +9,17 @@ def get_args():
     return parser.parse_args()
 
 args = get_args()
+
+#grab file name
 file_name=args.filename
 fh=open(file_name,"r")
+
+#base output name on input 
 output=open(file_name[:file_name.rfind(".")]+".tsv","w")
 for line in fh:
+    #only include mapped or summary statistic reads
     if line.startswith("ENSM") or line.startswith("__"):
         output.write(line)
+#close my files
 fh.close()
 output.close()

@@ -9,10 +9,18 @@ def get_args():
     parser.add_argument("-f", "--filename", help="input file",required=False,
                         type=str)
     return parser.parse_args()
-
 args = get_args()
+
 fh=open(args.filename,"rt")
+
 def get_counts(fh):
+    """
+    From an htseq-count output file get the number reads mapped to each gene,
+    then count frequency of those mapped values
+
+    Args:
+        fh (filehandle): opened input htseq file
+    """
     mapped_counts=[int(item.split()[1].strip()) for item in fh if item.split()[0].startswith("ENS")]
     _,ax=plt.subplots()
     #counts are high set to log
@@ -29,9 +37,17 @@ def get_counts(fh):
     sns.despine(top=True,right=True)
     out_file=args.filename[:args.filename.index(".")]+".png"
     plt.savefig(out_file)
-
+    #for % increase calculations
+    print(sum(mapped_counts))
 
 def get_categories(fh):
+    """
+    From an htseq-count output file get the number reads mapped to category,
+    (summing all the mapped reads) then report those counts
+
+    Args:
+        fh (filehandle): opened input htseq file
+    """
     data=fh.read().split("\n")
 
     #for our summary categories, create a list of counts
@@ -42,6 +58,7 @@ def get_categories(fh):
     counts=[int(item.split()[1].strip()) for item in data if item.split("\t")[0].startswith("__")]+\
            [sum([int(item.split()[1].strip()) for item in data if item.split("\t")[0].startswith("ENS")])]
     _,ax=plt.subplots(figsize=(15,8))
+    #get numer of mapped reads for % increase calculations
     print(counts[-1])
     #barh so use x-scale 
     plt.xscale("log")
@@ -53,5 +70,5 @@ def get_categories(fh):
     plt.savefig(out_file)
 
 
-#get_counts(fh)
-get_categories(fh)
+get_counts(fh)
+#get_categories(fh)

@@ -28,11 +28,11 @@ r1_prop_trimmed=((len(r1_list)-r1_list.count(101))/len(r1_list))*100
 file_assign=args.filename[:args.filename.index(".")]
 file_assign=file_assign[:file_assign.rfind("_")]
 
-r2_prop_trimmed=fh2.read().strip().split("\n")
-r2_prop_trimmed=[int(x) for x in r2_prop_trimmed]
+r2_list=fh2.read().strip().split("\n")
+r2_list=[int(x) for x in r2_list]
 #get proportion of reads trimmed
 r2_prop_trimmed=((
-    len(r2_prop_trimmed)-r2_prop_trimmed.count(101))/len(r2_prop_trimmed))*100
+    len(r2_list)-r2_list.count(101))/len(r2_list))*100
 
 print(f"{file_assign} proportion trimmed {r1_prop_trimmed}")
 print(f"{file_assign} proportion trimmed {r2_prop_trimmed}")
@@ -42,7 +42,7 @@ fig,ax=plt.subplots()
 plt.yscale('log')
 
 #plot two histograms together
-plt.hist([r1_list, r2_prop_trimmed],bins=60,label=["R1","R2"],
+plt.hist([r1_list, r2_list],bins=60,label=["R1","R2"],
          color=["mediumslateblue","seagreen"], alpha=0.7)
 
 #add relevant labels

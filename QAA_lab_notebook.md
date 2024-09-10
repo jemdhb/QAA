@@ -105,6 +105,7 @@ For more detailed interpretation of my FASTQC results, see my Rmarkdown
 ![](output_FASTQC_part1/21_3G_both_S15_L008_R1_001_fastqc/Images/per_base_n_content.png)
 
 *N-content across position*
+
 N-content stays extremely low throughout.  
 
 ##### 21_3G_R1 Per-base quality
@@ -112,6 +113,7 @@ N-content stays extremely low throughout.
 ![](output_FASTQC_part1/21_3G_both_S15_L008_R1_001_fastqc/Images/per_base_quality.png)
 
 *Quality across position* 
+
 These quality scores are high, while the quality varies near the ends, all scores stay within the green zone.
 
 #### 21_3G_R2
@@ -184,7 +186,7 @@ This is because R2 in demultiplex was an index file (with record length 8)
 while our R2 is the equivalent to R4 and has a record length of 101. Once I
 fixed this I was ready to run my old code.
 
-I did this in two separate sbatch runs located in the `/home/jujo/bgmp/bioinfo/PS/QAA/output_my_qs_plotting_part1/` folder ([qs_plotting_21](output_my_qs_plotting_part1/qs_plotting_21.sh) and [qs_plotting_34](output_my_qs_plotting_part1/qs_plotting_21.sh)) to speed this up.
+I did this in two separate sbatch runs located in the `/home/jujo/bgmp/bioinfo/PS/QAA/output_my_qs_plotting_part1/` folder ([qs_plotting_21](output_my_qs_plotting_part1/qs_plotting_21.sh) and [qs_plotting_34](output_my_qs_plotting_part1/qs_plotting_34.sh)) to speed this up.
 
 #### 21_3G_R1
 
@@ -313,7 +315,7 @@ Exit status: 0
 
 The FASTQC data plots impart much more information than my own. My plots solely map the mean quality distribution by position. Thus, I cannot see when my quality scores are lowered due to outliers or from low quality as a whole. In contrast, FASTQC calculates the mean, median, and IQR. And while my mean line and FASTQC's mean line look identical, the FASTQC's multi-metric methodology handles outliers much better. 
 
-FASTQC also incorporates great visual cues into their plots: a hard ylim of 40 and quality color coding in the figure's background. These additions make interpreting quality scores much simpler at a glance. In my code, I did not set a hard ylim. So, if a whole run is relatively worse than normal, my y-axis maximum will be lower than 40 (i.e., Figure 6b) this coupled with the lack of background color coding can mask the low-quality nature of the run at first glance.
+FASTQC also incorporates great visual cues into their plots: a hard ylim of 40 and quality color coding in the figure's background. These additions make interpreting quality scores much simpler at a glance. In my code, I did not set a hard ylim. So, if a whole run is relatively worse than normal, my y-axis maximum will be lower than 40 this coupled with the lack of background color coding can mask the low-quality nature of the run at first glance.
 
 #### Runtime
 
@@ -371,10 +373,10 @@ CPU usage was consistent across runs, with FASTQC using slightly less CPU than m
 
 *These metrics are discussed in detail in my Rmarkdown report*
 
-With the metrics discussed in my Rmarkdown report in mind, t's is safe to say that both `21_3G` files are high enough quality to proceed with further analysis. Most metrics passed, and those that produced a warning or failure make sense (sequence
+With the metrics discussed in my Rmarkdown report in mind, it's is safe to say that both `21_3G` files are high enough quality to proceed with further analysis. Most metrics passed, and those that produced a warning or failure make sense (sequence
 duplication) or can be fixed downstream (per-base sequence content).
 
-#### 34_4H Overall quality\
+#### 34_4H Overall quality
 
 |Recommendation| Metric| File|
 |--------------|-------|-----|
@@ -553,11 +555,23 @@ r1_list=[int(x) for x in r1_list]
 r1_prop_trimmed=((len(r1_list)-r1_list.count(101))/len(r1_list))*100
 ```
 
+With this code I recieved the following trimmed proportions
+
+|File| Percent trimmed|
+|-----|---------------|
+|21_3G_R1| 10.8 |
+|21_3G_R2| 17.3|
+|34_4H_R2| 13.1|
+|34_4H_R2| 18.6|
+
+
 My graph was calculated with:
 
 - A ylog scale for readability
 
 - The two histograms overlaid with `plt.hist([R1,R2])`
+
+This graphing code produced the following graphs.
 
 ![21_3G](output_trimmomatic_plotting_part2/21_3G_trimmed.png)
 
@@ -581,7 +595,7 @@ R2 files should be adapter trimmed at higher rates than R1 files because R2 file
   - command used: `conda install htseq`
 
 Can check current state of all packages installed on the QAA conda environment at
-[all_packages.txt](/home/jujo/bgmp/bioinfo/PS/QAA/general_info/all_packages.txt)
+[all_packages.txt](general_info/all_packages.txt)
 
 ### Data downloaded
 
@@ -601,7 +615,7 @@ Final sucessful command:
 
 ```bash
 #command for genome
-wget -m ftps://ftp.ensembl.org/pub/release-112/fasta/
+wget -m ftps://ftp.ensembl.org/pub/release-112/fasta/dna/mus_musculus/
 
 #with the output
 FINISHED --2024-09-07 15:00:56--
@@ -609,7 +623,7 @@ Total wall clock time: 7m 18s
 Downloaded: 78 files, 6.1G in 6m 31s (15.9 MB/s)
 
 #command for gtf
-ADDD
+wget -m ftps://ftp.ensembl.org/pub/release-112/gtf/mus_musculus/Mus_musculus.GRCm39.112.gtf.gz
 ```
 
 This genome `wget` downloaded 78 files. Initally I had no qualms with because I misunderstood STAR database creation to be like BLAST (`makeblastdb folder_name`) 
@@ -641,7 +655,10 @@ Once I increased my memory to 100 GB, STAR ran sucessfully producing the followi
 Computation done in the [star_genome.sh](mouse_genome_part3/star_genome.sh) sbatch script
 
 ```bash
-STAR --runThreadN 8 --runMode genomeGenerate --genomeDir /home/jujo/bgmp/bioinfo/PS/QAA/mouse_genome_part3/star_genome/ --genomeFastaFiles Mus_musculus.GRCm39.dna_rm.primary_assembly.fa --sjdbGTFfile Mus_musculus.GRCm39.112.gtf
+STAR --runThreadN 8 --runMode genomeGenerate --genomeDir \
+/home/jujo/bgmp/bioinfo/PS/QAA/mouse_genome_part3/star_genome/ \
+--genomeFastaFiles Mus_musculus.GRCm39.dna_rm.primary_assembly.fa \
+--sjdbGTFfile Mus_musculus.GRCm39.112.gtf
 
 Percent of CPU this job got: 409%
 Elapsed (wall clock) time (h:mm:ss or m:ss): 12:13.57
@@ -652,9 +669,9 @@ Exit status: 0
 
 #### Align reads
 
-**Note:** Computation done in [STAR_aln.sh](/home/jujo/bgmp/bioinfo/PS/QAA/STAR_mouse_aln_part3/STAR_aln.sh) sbatch script 
+**Note:** Computation done in [STAR_aln.sh](STAR_mouse_aln_part3/STAR_aln.sh) sbatch script
 
-I then aligned my **paired** trimmomcatic data against this newly created genomic database
+I then aligned my **paired** `trimmomatic` data against this newly created genomic database
 
 ##### 21_3G
 
@@ -744,7 +761,8 @@ I ran htseq with the following specifications
 ```bash
 #34_4H forward strand
 #command
-htseq-count --stranded=yes ../STAR_mouse_aln_part3/34_mouse_aln/Aligned.out.sam ../mouse_genome_part3/Mus_musculus.GRCm39.112.gtf
+htseq-count --stranded=yes ../STAR_mouse_aln_part3/34_mouse_aln/Aligned.out.sam \
+../mouse_genome_part3/Mus_musculus.GRCm39.112.gtf
 #with the output
 Percent of CPU this job got: 99%
 Elapsed (wall clock) time (h:mm:ss or m:ss): 7:05.66
@@ -754,7 +772,8 @@ Exit status: 0
 
 #34_4H reverse strand
 #command
-htseq-count --stranded=reverse ../STAR_mouse_aln_part3/34_mouse_aln/Aligned.out.sam ../mouse_genome_part3/Mus_musculus.GRCm39.112.gtf
+htseq-count --stranded=reverse ../STAR_mouse_aln_part3/34_mouse_aln/Aligned.out.sam \
+../mouse_genome_part3/Mus_musculus.GRCm39.112.gtf
 #with the  output
 Percent of CPU this job got: 99%
 Elapsed (wall clock) time (h:mm:ss or m:ss): 7:07.88
@@ -763,7 +782,8 @@ Exit status: 0
 
 #21_3G forward strand
 #command
-htseq-count --stranded=reverse ../STAR_mouse_aln_part3/mouse_aln/Aligned.out.sam ../mouse_genome_part3/Mus_musculus.GRCm39.112.gtf
+htseq-count --stranded=reverse ../STAR_mouse_aln_part3/mouse_aln/Aligned.out.sam \
+../mouse_genome_part3/Mus_musculus.GRCm39.112.gtf
 #with the output
 Percent of CPU this job got: 98%
 Elapsed (wall clock) time (h:mm:ss or m:ss): 12:05.88
@@ -773,7 +793,8 @@ Exit status: 0
 
 #21_3G reverse strand
 #command
-htseq-count --stranded=yes ../STAR_mouse_aln_part3/mouse_aln/Aligned.out.sam ../mouse_genome_part3/Mus_musculus.GRCm39.112.gtf
+htseq-count --stranded=yes ../STAR_mouse_aln_part3/mouse_aln/Aligned.out.sam \
+../mouse_genome_part3/Mus_musculus.GRCm39.112.gtf
 #with the output
 Percent of CPU this job got: 99%
 Elapsed (wall clock) time (h:mm:ss or m:ss): 11:13.86
@@ -825,7 +846,12 @@ Not completely obvious to you, dear reader :book:? I read in the R2 file twice. 
 
 ```bash
 #command
-STAR --runThreadN 8 --runMode alignReads --outFilterMultimapNmax 3 --outSAMunmapped Within KeepPairs --alignIntronMax 1000000 --alignMatesGapMax 1000000 --readFilesCommand zcat --readFilesIn /home/jujo/bgmp/bioinfo/PS/QAA/output_trimmomatic_part2/34_4H_R1.paired.fastq.gz /home/jujo/bgmp/bioinfo/PS/QAA/output_trimmomatic_part2/34_4H_R2.paired.fastq.gz --genomeDir /home/jujo/bgmp/bioinfo/PS/QAA/mouse_genome_part3/star_genome/ --outFileNamePrefix 34_4H_mouse_aln/
+STAR --runThreadN 8 --runMode alignReads --outFilterMultimapNmax 3 \
+--outSAMunmapped Within KeepPairs --alignIntronMax 1000000 --alignMatesGapMax \ 1000000 --readFilesCommand zcat --readFilesIn \
+/home/jujo/bgmp/bioinfo/PS/QAA/output_trimmomatic_part2/34_4H_R1.paired.fastq.gz \
+/home/jujo/bgmp/bioinfo/PS/QAA/output_trimmomatic_part2/34_4H_R2.paired.fastq.gz \
+--genomeDir /home/jujo/bgmp/bioinfo/PS/QAA/mouse_genome_part3/star_genome/ \
+--outFileNamePrefix 34_4H_mouse_aln/
 #with the output
 Percent of CPU this job got: 640%
 Elapsed (wall clock) time (h:mm:ss or m:ss): 1:40.49
@@ -871,7 +897,8 @@ Exit status: 0
 
 #34_4h reverse strand
 #command
-htseq-count --stranded=reverse ../STAR_mouse_aln_part3/34_4H_mouse_aln/Aligned.out.sam ../mouse_genome_part3/Mus_musculus.GRCm39.112.gtf
+htseq-count --stranded=reverse ../STAR_mouse_aln_part3/34_4H_mouse_aln/Aligned.out.sam \
+../mouse_genome_part3/Mus_musculus.GRCm39.112.gtf
 
 #with the output
 Percent of CPU this job got: 99%
@@ -880,11 +907,15 @@ Average resident set size (kbytes): 0
 Exit status: 0
 ```
 
-*The output of htseq-count will be parsed under the `Determining strandedness section`*
+#### Final htseq-count files location
+
+`/home/jujo/bgmp/bioinfo/PS/QAA/htseq_count_part3/output`
+
+*The output of these htseq-count files will be parsed under the `Determining strandedness section`*
 
 ### Determining strandedness
 
-**Note**: to parse my `htseq` data I created two graphing functions within the script [convince_leslie.py](`htseq_count_part3/convince_leslie.py)
+**Note**: to parse my `htseq` data I created two graphing functions within the script [convince_leslie.py](htseq_count_part3/convince_leslie.py)
 
 - Function `get_counts` to get the number of genes with certain read counts mapped to them and the function
 
