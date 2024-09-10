@@ -519,7 +519,7 @@ Exit status: 0
 
 #### 34_4H Trimmomatic
 
-I used the following trimmomatic command
+I used the following `trimmomatic` command
 
 ```bash
 /usr/bin/time -v trimmomatic PE /home/jujo/bgmp/bioinfo/PS/QAA/output_cutadapt_part2/34_4H_both_S24_L008_R1_001_trimmed.fastq /home/jujo/bgmp/bioinfo/PS/QAA/output_cutadapt_part2/34_4H_both_S24_L008_R2_001_trimmed.fastq 34_4H_R1.paired.fastq.gz 34_4H_R1.unpaired.fastq.gz 34_4H_R2.paired.fastq.gz 34_4H_R2.unpaired.fastq.gz LEADING:3 TRAILING:3 SLIDINGWINDOW:5:15 MINLEN:35
@@ -532,7 +532,7 @@ Average resident set size (kbytes): 0
 Exit status: 0
 ```
 
-With my gzipped trimmomatic output I could now proceed to graphing the final length distriutions of my reads. To invesitgate if my response to the above question is valid.
+With my gzipped `trimmomatic` output I could now proceed to graphing the final length distriutions of my reads. To invesitgate if my response to the above question is valid.
 
 **Note:** For this section, the code and figures below are all stored in `/home/jujo/bgmp/bioinfo/PS/QAA/output_trimmomatic_plotting_part2/`
 

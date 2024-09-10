@@ -1,9 +1,10 @@
 # Top level files
 
-- QAA_lab_notebook.md: my epic of gilgamesh describing my methods and troubleshooting.
-- QAA_Lab_Report.Rmd: clean and professional document showing my QAA results.
-- README.md: Directions.
-- where_stuff_is.md: Where stuff is (YOU ARE HERE :smile:)
+- **QAA_lab_notebook.md**: my epic of gilgamesh describing my methods and troubleshooting.
+- **QAA_Lab_Report.pdf**: clean and professional document showing my QAA results.
+- **QAA_Lab_Report.Rmd**: raw version of QAA_Lab_Report.pdf
+- **README.md**: Directions.
+- **where_stuff_is.md**: Where stuff is (YOU ARE HERE :smile:)
 
 # Directories
 
