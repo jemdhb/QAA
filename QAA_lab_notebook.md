@@ -1,9 +1,5 @@
 # QAA
 
-# Move stuff in from other PS
-
-**Note:** After recieving my PS8 feedback I updated my code to better capture header sequences.
-
 ## Versions
 
 **Conda environment:** QAA
@@ -13,6 +9,8 @@
 **fastqc version:** 0.12.1
 
 **cutadapt version**: 0.9
+
+For a more detailed version history visit `general_info/all_packages.txt`
 
 ## Part 1
 
@@ -32,7 +30,7 @@ My file assignments are:
 - `21_3G_both_S15_L008`
   - alias: `21_3G`
 
-The path to these files are :
+The path to these files are:
 
 ```bash
 /projects/bgmp/shared/2017_sequencing/demultiplexed/34_4H_both_S24_L008_R1_001.fastq.gz
@@ -61,10 +59,10 @@ Done with: `zcat file_path | awk 'END {print NR/4}'`
 
 |File|record count|
 |------|------------|
-|34_4H_both_S24_L008_R1_001|9040597|
-|34_4H_both_S24_L008_R2_001|9040597|
-|21_3G_both_S15_L008_R1_001|9237299|
-|21_3G_both_S15_L008_R2_001|9237299|
+|34_4H_R1|9040597|
+|34_4H_R2|9040597|
+|21_3G_R1|9237299|
+|21_3G_R2|9237299|
 
 Within an index label (34_4H, 21_3G) the number of records is the same. It appears that record 21_3G yielded slighly more records (2.1% more to be exact). This small difference is likely insignificant. So the difference in R1 vs R2 file size does not lie in the number of records, is it possibly due to record length?
 
@@ -73,10 +71,10 @@ Within an index label (34_4H, 21_3G) the number of records is the same. It appea
 Done with `zcat file_path | awk 'NR%4==2{print length($0)}'| uniq -c`
 With this I verified the record length was 101 for **every** file I was assigned. This makes sense because no trimming software has been used.
 
-### Command line fastqc
-Command used 
+### Command line FASTQC
 
 ```bash
+#Command used 
 /usr/bin/time -v fastqc -o timing/ -t 8 /projects/bgmp/shared/2017_sequencing/demultiplexed/34_4H_both_S24_L008_R1_001.fastq.gz /projects/bgmp/shared/2017_sequencing/demultiplexed/34_4H_both_S24_L008_R2_001.fastq.gz /projects/bgmp/shared/2017_sequencing/demultiplexed/21_3G_both_S15_L008_R1_001.fastq.gz /projects/bgmp/shared/2017_sequencing/demultiplexed/21_3G_both_S15_L008_R2_001.fastq.gz
 
 #with timing
@@ -91,92 +89,169 @@ Was a bit slower than expected but working at a cafe with iffy wifi so not surpr
 
 I unzipped my results from this (located at `/home/jujo/bgmp/bioinfo/PS/QAA/output_FASTQC_part1/`) and summarized the relevant data below
 
-**Produce plots of the per-base N content, and comment on whether or not they are consistent with the quality score plots.**
+For more detailed interpretation of my FASTQC results, see my Rmarkdown
 
-#### 21_3G_both_S15_L008_R1_001
+#### 21_3G_R1
 
 
 |Score|On|Original File|
 |------|----|-------------|
-|PASS |Per base sequence quality| 21_3G_both_S15_L008_R1_001.fastq.gz|
-|PASS| Per base N content| 21_3G_both_S15_L008_R1_001.fastq.gz|
+|PASS |Per base sequence quality| 21_3G_R1|
+|PASS| Per base N content| 21_3G_R1|
 
 
-##### 21_3G_both_S15_L008_R1_001 N-content
+##### 21_3G_R1 N-content
 
 ![](output_FASTQC_part1/21_3G_both_S15_L008_R1_001_fastqc/Images/per_base_n_content.png)
 
 *N-content across position*
 N-content stays extremely low throughout.  
 
-##### 21_3G_both_S15_L008_R1_001 Per-base quality
+##### 21_3G_R1 Per-base quality
 
 ![](output_FASTQC_part1/21_3G_both_S15_L008_R1_001_fastqc/Images/per_base_quality.png)
 
 *Quality across position* 
+These quality scores are high, while the quality varies near the ends, all scores stay within the green zone.
 
-#### 21_3G_both_S15_L008_R2_001
+#### 21_3G_R2
 
 |Score|On|Original File|
 |------|----|-------------|
-|PASS |   Per base sequence quality|       21_3G_both_S15_L008_R2_001.fastq.gz|
-|PASS|Per base N content|      21_3G_both_S15_L008_R2_001.fastq.gz|
+|PASS |   Per base sequence quality|       21_3G_R2.fastq.gz|
+|PASS|Per base N content|      21_3G_R2.fastq.gz|
 
-##### 21_3G_both_S15_L008_R2_001 N-content
+##### 21_3G_R2 N-content
 
 ![](output_FASTQC_part1/21_3G_both_S15_L008_R2_001_fastqc/Images/per_base_n_content.png)
 
-##### 21_3G_both_S15_L008_R2_001 Per-base quality
+N-content stays extremely low throughout.  
+
+##### 21_3G_R2 Per-base quality
 
 ![](output_FASTQC_part1/21_3G_both_S15_L008_R2_001_fastqc/Images/per_base_quality.png)
 
-#### 34_4H_both_S24_L008_R1_001
+These quality scores are high, while the outliers on the 3' end veer into the yellow zone, all mean and median scores stay within the green zone.
+
+
+#### 34_4H_R1
 
 |Score|On|Original File|
 |------|----|-------------|
-|PASS| Per base sequence quality|       34_4H_both_S24_L008_R1_001.fastq.gz|
-|PASS| Per base N content |     34_4H_both_S24_L008_R1_001.fastq.gz|
+|PASS| Per base sequence quality|       34_4H_R1.fastq.gz|
+|PASS| Per base N content |     34_4H_R1.fastq.gz|
 
-##### 34_4H_both_S24_L008_R1_001 N-content
+##### 34_4H_R1 N-content
 
 ![](output_FASTQC_part1/34_4H_both_S24_L008_R1_001_fastqc/Images/per_base_n_content.png)
 *N-content across position*
 N-content stays extremely low throughout. 
 
-##### 34_4H_both_S24_L008_R1_001 Per-base quality
+##### 34_4H_R1 Per-base quality
 
 ![](output_FASTQC_part1/34_4H_both_S24_L008_R1_001_fastqc/Images/per_base_quality.png)
 
-#### 34_4H_both_S24_L008_R2_001
+These quality scores are high, while the quality varies near the ends, all scores stay within the green zone.
+
+#### 34_4H_R2
 
 |Score|On|Original File|
 |------|----|-------------|
-|PASS| Per base sequence quality|    34_4H_both_S24_L008_R2_001.fastq.gz|
-|PASS| Per base N content |     34_4H_both_S24_L008_R2_001.fastq.gz|
+|PASS| Per base sequence quality|    34_4H_R2.fastq.gz|
+|PASS| Per base N content |     34_4H_R2.fastq.gz|
 
-##### 34_4H_both_S24_L008_R2_001 N-content
+##### 34_4H_R2 N-content
 
 ![](output_FASTQC_part1/34_4H_both_S24_L008_R2_001_fastqc/Images/per_base_n_content.png)
 
-##### 34_4H_both_S24_L008_R2_001 Per-base quality
+N-content stays extremely low throughout.  
 
-![](output_FASTQC_part1/34_4H_both_S24_L008_R2_001_fastqc/Images/per_base_quality.png)
+##### 34_4H_R2 Per-base quality
+
+![](output_FASTQC_part1/34_4H_both_S24_L008_R2_001_fastqc/Images/per_base_quality.png) 
+
+These quality scores are high, while the outliers on the 5' and 3' end veer into the yellow zone, all mean and median scores stay within the green zone.
+
 
 ### My qscore script
+
+**Note:** Used Demultiplexing code located at `/home/jujo/bgmp/bioinfo/PS/Demultiplex/Assignment-the-first/part1.py` to create my mean quality-score-by-base files and then I used my Demultiplexing code located at `/home/jujo/bgmp/bioinfo/PS/Demultiplex/Assignment-the-first/part1_graphs.py` to graph said files. 
+
+#### Alterations to the original script
 
 I had to review my Demultiplex code to explicity add argparse for record length.
 This is because R2 in demultiplex was an index file (with record length 8)
 while our R2 is the equivalent to R4 and has a record length of 101. Once I
 fixed this I was ready to run my old code.
 
-I did this in two separate sbatch runs (`qs_plotting_21` and `qs_plotting_34`) to
-speed this up.
+I did this in two separate sbatch runs (`qs_plotting_21` and `qs_plotting_34`) to speed this up.
 
 - Both of these scripts are located in the `/home/jujo/bgmp/bioinfo/PS/QAA/output_my_qs_plotting_part1/` folder
 
-#### 34_4H_both_S24_L008_R1_001
+#### 21_3G_R1
 
-##### 34_4H_both_S24_L008_R1_001 Means
+##### 21_3G_R1 Means
+
+```bash
+/usr/bin/time -v python /home/jujo/bgmp/bioinfo/PS/Demultiplex/Assignment-the-first/part1.py \
+-f /projects/bgmp/shared/2017_sequencing/demultiplexed/21_3G_R1.fastq.gz \
+-R2 False> 21_3G_R1_means.txt
+Percent of CPU this job got: 99%
+Elapsed (wall clock) time (h:mm:ss or m:ss): 5:04.88
+Maximum resident set size (kbytes): 28760
+Average resident set size (kbytes): 0
+Exit status: 0
+```
+
+##### 21_3G_R1 Graphs 
+
+```bash
+/usr/bin/time -v python /home/jujo/bgmp/bioinfo/PS/Demultiplex/Assignment-the-first/part1_graphs.py \
+-f 21_3G_R1_means.txt
+
+Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.44
+Maximum resident set size (kbytes): 62264
+Average resident set size (kbytes): 0
+Exit status: 0
+```
+
+![31_3G_R1_means](output_my_qs_plotting_part1/21_3G_R1_means.png)
+
+### 21_3G_R2
+
+#### 21_3G_R2 Means
+
+```bash
+#command 
+/usr/bin/time -v python /home/jujo/bgmp/bioinfo/PS/Demultiplex/Assignment-the-first/part1.py \
+-f /projects/bgmp/shared/2017_sequencing/demultiplexed/21_3G_both_S15_L008_R2_001.fastq.gz \
+-R2 True > 21_3G_R2_means.txt
+
+#with the output
+Percent of CPU this job got: 99%
+Elapsed (wall clock) time (h:mm:ss or m:ss): 5:08.32
+Maximum resident set size (kbytes): 28664
+Average resident set size (kbytes): 0
+Exit status: 0
+```
+
+#### 21_3G_R2 Graphs
+
+```bash
+/usr/bin/time -v python /home/jujo/bgmp/bioinfo/PS/Demultiplex/Assignment-the-first/part1_graphs.py \
+-f 21_3G_R2_means.txt
+
+Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.45
+Maximum resident set size (kbytes): 60428
+Average resident set size (kbytes): 0
+Exit status: 0
+```
+
+![31_3G_R1_means](output_my_qs_plotting_part1/21_3G_R2_means.png)
+
+#### 34_4H_R1
+
+##### 34_4H_R1 Means
 
 ```bash
 #command
@@ -191,7 +266,7 @@ Average resident set size (kbytes): 0
 Major (requiring I/O) page faults: 0
 ```
 
-##### 34_4H_both_S24_L008_R1_001 Graphs
+##### 34_4H_R1 Graphs
 
 ```bash
 /usr/bin/time -v python \
@@ -204,11 +279,11 @@ Average resident set size (kbytes): 0
 Exit status: 0
 ```
 
-![34_4H_both_S24_L008_R2_001](output_my_qs_plotting_part1/34_4H_R1_means.png)
+![34_4H_R2](output_my_qs_plotting_part1/34_4H_R1_means.png)
 
-#### 34_4H_both_S24_L008_R2_001
+#### 34_4H_R2
 
-##### 34_4H_both_S24_L008_R2_001 Means
+##### 34_4H_R2 Means
 
 ```bash
 /usr/bin/time -v python /home/jujo/bgmp/bioinfo/PS/Demultiplex/Assignment-the-first/part1.py \
@@ -233,77 +308,92 @@ Average resident set size (kbytes): 0
 Exit status: 0
 ```
 
-![34_4H_both_S24_L008_R2_001](output_my_qs_plotting_part1/34_4H_R2_means.png)
+![34_4H_R2](output_my_qs_plotting_part1/34_4H_R2_means.png)
 
-#### 21_3G_both_S15_L008_R1_001
 
-##### 21_3G_both_S15_L008_R1_001 Means
+### FastQC quality score vs. mine
 
-```bash
-/usr/bin/time -v python /home/jujo/bgmp/bioinfo/PS/Demultiplex/Assignment-the-first/part1.py \
--f /projects/bgmp/shared/2017_sequencing/demultiplexed/21_3G_both_S15_L008_R1_001.fastq.gz \
--R2 False> 21_3G_R1_means.txt
-Percent of CPU this job got: 99%
-Elapsed (wall clock) time (h:mm:ss or m:ss): 5:04.88
-Maximum resident set size (kbytes): 28760
-Average resident set size (kbytes): 0
-Exit status: 0
-```
+The FASTQC data plots impart much more information than my own. My plots solely map the mean quality distribution by position. Thus, I cannot see when my quality scores are lowered due to outliers or from low quality as a whole. In contrast, FASTQC calculates the mean, median, and IQR. And while my mean line and FASTQC's mean line look identical, the FASTQC's multi-metric methodology handles outliers much better. 
 
-##### 21_3G_both_S15_L008_R1_001 Graphs 
+FASTQC also incorporates great visual cues into their plots: a hard ylim of 40 and quality color coding in the figure's background. These additions make interpreting quality scores much simpler at a glance. In my code, I did not set a hard ylim. So, if a whole run is relatively worse than normal, my y-axis maximum will be lower than 40 (i.e., Figure 6b) this coupled with the lack of background color coding can mask the low-quality nature of the run at first glance.
 
-```bash
-/usr/bin/time -v python /home/jujo/bgmp/bioinfo/PS/Demultiplex/Assignment-the-first/part1_graphs.py \
--f 21_3G_R1_means.txt
+#### Runtime
 
-Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.44
-Maximum resident set size (kbytes): 62264
-Average resident set size (kbytes): 0
-Exit status: 0
-```
+|File|Script|Runtime (seconds)|
+|------|----|-------------|
+|21_3G_R1| mine| 304.88|
+|21_3G_R1| FASTQC | 38.27*|
+|21_3G_R2| mine| 308.32|
+|21_3G_R2| FASTQC | 38.27*|
+|34_4H_R1| mine| 307.19|
+|34_4H_R1| FASTQC | 38.27*|
+|34_4H_R2| mine| 317.67|
+|34_4H_R2| FASTQC | 38.27*|
+|average|mine|309.52|
+|average|FASTQC|38.27|
 
-![31_3G_R1_means](output_my_qs_plotting_part1/21_3G_R1_means.png)
+*Ran all files at once and divided total run time by 4.
 
-### 21_3G_both_S15_L008_R2_001
 
-#### 21_3G_both_S15_L008_R2_001 Means
+On average, FASTQC is `(309.52/38.27)=8.1` times **faster** than my code!
 
-```bash
-#command 
-/usr/bin/time -v python /home/jujo/bgmp/bioinfo/PS/Demultiplex/Assignment-the-first/part1.py \
--f /projects/bgmp/shared/2017_sequencing/demultiplexed/21_3G_both_S15_L008_R2_001.fastq.gz \
--R2 True > 21_3G_R2_means.txt
+This large disparity in speed makes sense. I wrote my De-multiplexing code in one week in Python, while FASTQC was built by a team in 2010 in Java (a generally faster language) and continually improved over the past decade. Even in the one week I spent on De-multiplexing I was able to greatly speed up my code. This is a case of disparity in time and resources.
 
-#with the output
-Percent of CPU this job got: 99%
-Elapsed (wall clock) time (h:mm:ss or m:ss): 5:08.32
-Maximum resident set size (kbytes): 28664
-Average resident set size (kbytes): 0
-Exit status: 0
-```
+#### Memory/CPU usuage 
 
-#### 21_3G_both_S15_L008_R2_001 Graphs
+|File|Script| % CPU used|
+|------|----|-------------|
+|21_3G_R1| mine| 99|
+|21_3G_R1| FASTQC |97|
+|21_3G_R2| mine| 99|
+|21_3G_R2| FASTQC |97|
+|34_4H_R1| mine| 99|
+|34_4H_R1| FASTQC | 99|
+|34_4H_R2| mine| 99|
+|34_4H_R2| FASTQC |97|
 
-```bash
-/usr/bin/time -v python /home/jujo/bgmp/bioinfo/PS/Demultiplex/Assignment-the-first/part1_graphs.py \
--f 21_3G_R2_means.txt
-
-Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.45
-Maximum resident set size (kbytes): 60428
-Average resident set size (kbytes): 0
-Exit status: 0
-```
-
-![31_3G_R1_means](output_my_qs_plotting_part1/21_3G_R2_means.png)
-
-**Describe how the `FastQC` quality score distribution plots compare to your own. If different, propose an explanation. Also, does the runtime differ? Mem/CPU usage? If so, why?**
+CPU usage was consistent across runs, with FASTQC using slightly less CPU than my own code. This difference is slight enough to be insignificant. 
 
 ### Comment on overall data quality
 
-My 21_3G data is overall higher quality than my 34_4H
-Add further plots with my flagged data in my report 
+#### 21_3G Overall quality
 
-**Comment on the overall data quality of your two libraries. Go beyond per-base qscore distributions. Make and justify a recommendation on whether these data are of high enough quality to use for further analysis.**
+|Recommendation| Metric| File|
+|--------------|-------|-----|
+|PASS|	Per base sequence quality	|R1, R2|
+|PASS	|Per base N content| R1, R2|
+|PASS	|Sequence Length Distribution| R1, R2|
+|WARN	|Sequence Duplication Levels| R1, R2|
+|FAIL|Per tile sequence quality	|R1, R2|
+|FAIL	|Per base sequence content	|R1|
+|WARN	|Per base sequence content|	R2|
+|PASS	|Per sequence GC content	|R1, R2|
+|WARN	|Overrepresented sequences | R1, R2|
+|PASS	|Adapter Content	|R1, R2|
+
+*These metrics are discussed in detail in my Rmarkdown report*
+
+With the metrics discussed in my Rmarkdown report in mind, t's is safe to say that both `21_3G` files are high enough quality to proceed with further analysis. Most metrics passed, and those that produced a warning or failure make sense (sequence
+duplication) or can be fixed downstream (per-base sequence content).
+
+#### 34_4H Overall quality\
+
+|Recommendation| Metric| File|
+|--------------|-------|-----|
+|PASS|	Per base sequence quality|	R1, R2|
+|PASS|	Per base N content| R1, R2|
+|PASS|	Sequence Length Distribution|	R1, R2|
+|WARN|	Sequence Duplication Levels|	R1, R2|
+|FAIL|	Per tile sequence quality| R1, R2|
+|FAIL|	Per base sequence content|	R1|
+|WARN|	Per base sequence content|	R2|
+|PASS|	Per sequence GC content|	R1, R2|
+|WARN|	Overrepresented sequences|	R1, R2|
+|PASS|	Adapter Content|	R1, R2|
+
+*These metrics are discussed in detail in my Rmarkdown report*
+
+With the metrics discussed in my Rmarkdown report in mind, it's is safe to say that both `34_4H` files are high enough quality to proceed with further downstream analysis. Though my `21_3G` data is higher quality than my `34_4H` most metrics passed, and those that produced a warning or failure make sense (sequence duplication) or can be fixed downstream (per-base sequence content).
 
 ## Part 2
 
@@ -478,15 +568,15 @@ My graph was calculated with:
 
 ![34_4H](output_trimmomatic_plotting_part2/34_4H_trimmed.png)
 
-Comment on whether you expect R1s and R2s to be adapter-trimmed at different rates and why.
+#### R1s and R2s adapter-trimmed at different rates?
 
-R2 files should be adapter trimmed at higher rates than R1 files because R2 files are completed the end of the run. As the run continues reagents and the signal degrades contributing. Signal degradation causes adapter bases to be called in the well over insert bases, causing adapters to be overrepresented. This contributes to the overall lowering of run quality, which we can see from out FASTQ output above.
+R2 files should be adapter trimmed at higher rates than R1 files because R2 files are completed the end of the run. As the run continues reagents and the signal degrades contributing. Signal degradation causes adapter bases to be called in the well over insert bases, causing adapters to be overrepresented. This contributes to the overall lowering of run quality, which we can see from our FASTQ output above.
 
 -  This information can be verified on the Illumina website.
 
 ## Part 3
 
-### Packages installed 
+### Packages installed
 
 - star: `2.7.11b`
   - command used: `conda install STAR`
@@ -494,7 +584,7 @@ R2 files should be adapter trimmed at higher rates than R1 files because R2 file
   - command used: `conda install numpy` --> already installed
 - matplotlib: `3.9.2`
   - command used: `conda install matplotlib` --> already installed
-- htseq: `2.0.5 ` 
+- htseq: `2.0.5 `
   - command used: `conda install htseq`
 
 Can check current state of all packages installed on the QAA conda environment at
@@ -545,7 +635,7 @@ I had downloaded the correct file in the first step :see_no_evil:...So, I could 
 
 ### Running STAR :star:
 
-#### Confusion about parameters 
+#### Confusion about parameters
 
 Initally, I was running genome generate with zipped files and recieving cryptic error messages. After reading the documentation, I proceeded to unzip my relevant files and was able to get STAR to run...
 
@@ -556,7 +646,6 @@ Once I increased my memory to 100 GB, STAR run sucessfully producing the followi
 #### Genome generate :angel:
 
 Computation done in the `mouse_genome_part3/star_genome.sh` sbatch script
-
 
 ```bash
 STAR --runThreadN 8 --runMode genomeGenerate --genomeDir /home/jujo/bgmp/bioinfo/PS/QAA/mouse_genome_part3/star_genome/ --genomeFastaFiles Mus_musculus.GRCm39.dna_rm.primary_assembly.fa --sjdbGTFfile Mus_musculus.GRCm39.112.gtf
@@ -587,10 +676,7 @@ Average resident set size (kbytes): 0
 Exit status: 0
 ```
 
-
 ##### 34_4H
-
-**Put r2 twice !!! redo paths**
 
 ```bash
 #command
@@ -610,10 +696,11 @@ Average resident set size (kbytes): 0
 Exit status: 0
 ```
 
-With this output (`/home/jujo/bgmp/bioinfo/PS/QAA/STAR_mouse_aln_part3/34_4H_mouse_aln`) I was ready to reuse my PS8 script to count paired and unpaired reads. My original script was sound, I just added some argparse to the script.
+With this output (`/home/jujo/bgmp/bioinfo/PS/QAA/STAR_mouse_aln_part3/34_4H_mouse_aln`) I was ready to reuse my PS8 script (located at `/home/jujo/bgmp/bioinfo/PS/ps8-jemdhb`)to count paired and unpaired reads. My original script was sound, I just added some argparse to it.
 
-Script run with the same srun as before 
-### my Python script
+Script run with the same srun as before
+
+### My PS8 script
 
 #### 21_G output
 
@@ -630,8 +717,8 @@ Exit status: 0
 
 From this call, my `21_G` file was determined to have
 
-- Mapped reads is: 15,125,868
-- Unmapped reads in 2,580,756
+- Mapped reads: 15,125,868
+- Unmapped reads: 2,580,756
 
 #### 34_4H output
 
@@ -648,31 +735,75 @@ Exit status: 0
 
 From this call, my `34_h` file was determined to have
 
-- Mapped reads is: 89632
-- Unmapped reads in 17216650
+- Mapped reads: 8,9632
+- Unmapped reads in 17,216,650
 
-htseq ensure data is sorted-->jk it says use defaults.
+That is a a lot of unmapped reads...surely that doesn't mean anything...right?
 
-did not specify an outputfile so I had to parse out myself
-`fix_names.py`
+### Running htseq
 
-began making graphing scripts to interpret my results
+**Note:** Did not specify an outputfile so my htseq output and slurm logs were combined :skull:
+
+- I parsed out the htseq information with the script `htseq_count_part3/fix_names.py`
+
+I ran htseq with the following specifications
+
+```bash
+#34_4H forward strand
+#command
+htseq-count --stranded=yes ../STAR_mouse_aln_part3/34_mouse_aln/Aligned.out.sam ../mouse_genome_part3/Mus_musculus.GRCm39.112.gtf
+#with the output
+Percent of CPU this job got: 99%
+Elapsed (wall clock) time (h:mm:ss or m:ss): 7:05.66
+Average resident set size (kbytes): 0
+Major (requiring I/O) page faults: 0
+Exit status: 0
+
+#34_4H reverse strand
+#command
+htseq-count --stranded=reverse ../STAR_mouse_aln_part3/34_mouse_aln/Aligned.out.sam ../mouse_genome_part3/Mus_musculus.GRCm39.112.gtf
+#with the  output
+Percent of CPU this job got: 99%
+Elapsed (wall clock) time (h:mm:ss or m:ss): 7:07.88
+Average resident set size (kbytes): 0
+Exit status: 0
+
+#21_3G forward strand
+#command
+htseq-count --stranded=reverse ../STAR_mouse_aln_part3/mouse_aln/Aligned.out.sam ../mouse_genome_part3/Mus_musculus.GRCm39.112.gtf
+#with the output
+Percent of CPU this job got: 98%
+Elapsed (wall clock) time (h:mm:ss or m:ss): 12:05.88
+Average resident set size (kbytes): 0
+Major (requiring I/O) page faults: 0
+Exit status: 0
+
+#21_3G reverse strand
+#command
+htseq-count --stranded=yes ../STAR_mouse_aln_part3/mouse_aln/Aligned.out.sam ../mouse_genome_part3/Mus_musculus.GRCm39.112.gtf
+#with the output
+Percent of CPU this job got: 99%
+Elapsed (wall clock) time (h:mm:ss or m:ss): 11:13.86
+Average resident set size (kbytes): 0
+Major (requiring I/O) page faults: 0
+Exit status: 0
+```
+
+My `34_4H` runs were much quicker than my `21_3G` runs...surely this doesnt mean anything...right?
 
 ### Something is amiss
 
-When I began to parse my final ht-seq data, I noticed some issues with my 34_4H data:
+When I began to parse my final `htseq` data, I noticed some issues with my `34_4H` results:
 
-##### No differentiation between strandedness
-
-stranded=reverse and stranded=yes
+#### No differentiation between strandedness
 
 ![Reverse](general_info/34H_stranded_reverse.png)
 
 ![Yes](general_info/34H_stranded_yes.png)
 
-In comparison with my 21_3G output (discussed below), these were histplots were shockingly similar. My inital concern was that I created the same graph twice and misnamed, then but there is some differentiation around x=5
+In comparison with my `21_3G` output (discussed in the `Determining Strandedness` section), these were histplots were shockingly similar. My inital concern was that I created the same graph twice and misnamed it, but there is some small differentiation around count=5
 
-I then verified that there is only one correct answer (that both 21_3G and 34_4H should both be stranded or unstranded)
+I then verified that there is only one correct answer (that both `21_3G` and `34_4H` should both be stranded or unstranded)
 
 Before tearing through all of my bash commands to look for an issue, i wanted to graph one last metric
 
@@ -681,7 +812,7 @@ Before tearing through all of my bash commands to look for an issue, i wanted to
 
 Once I saw that essentially none of my reads mapped here (and my quality values from part 1 were not alarming) I knew some sort of typo had occurred upstream 
 
-After many moons pouring through this very document I discovered the culprit
+After many moons :moon: pouring through this very document I discovered the culprit :star:
 
 ```bash
 #command
@@ -695,7 +826,7 @@ STAR --runThreadN 8 --runMode alignReads \
 --outFileNamePrefix 34_mouse_aln/
 ```
 
-Not completely obvious to you, dear reader :book:? I read in the R2 file twice. Thankfully only have of my data was useless and had to be reran 
+Not completely obvious to you, dear reader :book:? I read in the R2 file twice. Thankfully only half of my data was useless and had to be reran.
 
 ### Rerunning STAR aln
 
@@ -709,9 +840,9 @@ Average resident set size (kbytes): 0
 Exit status: 0
 ```
 
-I knew this run was significantly different because my output file was 1.2 GB larger !
+I knew this run was significantly different because my output file was 1.2 GB larger!
 
-### rerunning ps8 script
+### Rerunning ps8 script
 
 ```bash
 #command
@@ -725,33 +856,73 @@ Exit status: 0
 
 With the output:
 
-- Mapped reads: 1,563,1049
-- Unmapped reads in 1,675,233
+- Mapped reads: 15,631,049
+- Unmapped reads: 1,675,233
 
-### Determining standedness
+These results were much less alarming than my original run
 
-# add hand calculations for mapped vs. unmapped with bash
-htseq count
+### Rerunning htseq-count
+
+```bash
+#34_4h forward strand
+#command
+/usr/bin/time -v htseq-count --stranded=yes \
+../STAR_mouse_aln_part3/34_4H_mouse_aln/Aligned.out.sam \
+../mouse_genome_part3/Mus_musculus.GRCm39.112.gtf
+
+#with the output
+Percent of CPU this job got: 98%
+Elapsed (wall clock) time (h:mm:ss or m:ss): 11:31.18
+Average resident set size (kbytes): 0
+Exit status: 0
+
+#34_4h reverse strand
+#command
+htseq-count --stranded=reverse ../STAR_mouse_aln_part3/34_4H_mouse_aln/Aligned.out.sam ../mouse_genome_part3/Mus_musculus.GRCm39.112.gtf
+
+#with the output
+Percent of CPU this job got: 99%
+Elapsed (wall clock) time (h:mm:ss or m:ss): 11:23.50
+Average resident set size (kbytes): 0
+Exit status: 0
+```
+
+*The output of htseq-count will be parsed under the `Determining strandedness section`*
+
+### Determining strandedness
+
+**Note**: to parse my `htseq` data I created two graphing functions within the script `htseq_count_part3/convince_leslie.py`
+
+- Function `get_counts` to get the number of genes with certain read counts mapped to them and the function
+
+- Function `get_cats` to get the number of reads allotted to the htseq summary statistic categories.  
+
+I propose that both my `21_3G` and `34_4H` libraries are reverse stranded. The reasoning behind this determination is clear once one examines the htseq-count output in detail.
 
 #### 21_3G my script
 
 ![](htseq_count_part3/21G_stranded_reverse.png)
 ![](htseq_count_part3/21G_stranded_yes.png)
 
-![](htseq_count_part3/cats_21G_stranded_reverse.png)
-![](htseq_count_part3/cats_21G_stranded_yes.png)
+If our data was unstranded, the number of genes mapped to specific runs would be the same whether the strand direction was set to forward or reverse. This is not the case: visually the reverse strand plot has much more data mapped than the forward strand plot. Numerically 303,726 reads mapped on the forward strand and 6,636,009 reads mapped on the reverse strand. This 2084.87% increase, which is not insignificant in any sense of the word.
 
-My reverse strand htseq-count produced much more gene-mapped reads
+![](htseq_count_part3/graphing_output/cats_21G_stranded_reverse.png)
+![](htseq_count_part3/graphing_output/cats_21G_stranded_yes.png)
+
+In the forward strand data, "no feature" dominates our read categories. In the reverse strand data, "mapped" dominates our read categories. This indicates that our data is stranded in the **reverse** direction.
 
 #### 34_4H my script
 
-![](htseq_count_part3/34H_stranded_reverse.png)
-![](htseq_count_part3/34H_stranded_yes.png)
+![](htseq_count_part3/graphing_output/34_4H_stranded_reverse.png)
+![](htseq_count_part3/graphing_output/34_4H_stranded_yes.png)
 
-![](htseq_count_part3/cats_34H_stranded_reverse.png)
-![](htseq_count_part3/cats_34H_stranded_yes.png)
+The same as was mentioned for `21_3G` holds true for `34_4H`. If our data was unstranded, the number of genes mapped to specific runs would be the same whether the strand direction was set to forward or reverse. This is not the case: visually the reverse strand plot has much more data mapped than the forward strand plot. Numerically, 
 
-add table with percent mapped reads
 
-- If our protocol was stranded,`htseq-count` stranded=reverse and stranded=yes  would have produced very similar output. But because the outputs 
+![](htseq_count_part3/graphing_output/cats_34H_stranded_reverse.png)
 
+![](htseq_count_part3/graphing_output/cats_34_4H_stranded_yes.png)
+As mentioned in `21_3G`, in the forward strand data "no feature" dominates our read categories. In the reverse strand data, "mapped" dominates our read categories. This indicates that our data is stranded in the **reverse** direction.
+
+
+With that QAA is...done! :bomb:

@@ -1,10 +1,15 @@
 htseq_count_part3/logs/
-mouse_genome_part3/
+mouse_genome_part3/*.gz
+mouse_genome_part3/*.fa
+STAR_mouse_aln_part3/21_3G_mouse_aln/
+STAR_mouse_aln_part3/34_4H_mouse_aln/
 output_trimmomatic_plotting_part2/*.txt
 STAR_mouse_aln_part3/R2_2x_34_4H_mouse_aln/
 STAR_mouse_aln_part3/*.out*
-output_my_qs_plotting_part1/logs
+*logs/
 *slurm*
+mouse_genome_part3/GenomeDir/
+mouse_genome_part3/star_genome/
 output_FASTQC_part1/zipped_stuff
 # bioinfo files
 *.fastq

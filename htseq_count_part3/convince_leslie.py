@@ -42,7 +42,7 @@ def get_categories(fh):
     counts=[int(item.split()[1].strip()) for item in data if item.split("\t")[0].startswith("__")]+\
            [sum([int(item.split()[1].strip()) for item in data if item.split("\t")[0].startswith("ENS")])]
     _,ax=plt.subplots(figsize=(15,8))
-
+    print(counts[-1])
     #barh so use x-scale 
     plt.xscale("log")
     plt.barh(cats,counts,color="seagreen",alpha=0.7)
