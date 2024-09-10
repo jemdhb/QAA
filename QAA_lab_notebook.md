@@ -10,7 +10,7 @@
 
 **cutadapt version**: 0.9
 
-For a more detailed version history visit `general_info/all_packages.txt`
+For a more detailed version history visit [all_packages.txt](general_info/all_packages.txt)
 
 ## Part 1
 
@@ -87,7 +87,7 @@ Exit status: 0
 
 Was a bit slower than expected but working at a cafe with iffy wifi so not surprising
 
-I unzipped my results from this (located at `/home/jujo/bgmp/bioinfo/PS/QAA/output_FASTQC_part1/`) and summarized the relevant data below
+I unzipped my results from this (located at `output_FASTQC_part1/`) and summarized the relevant data below
 
 For more detailed interpretation of my FASTQC results, see my Rmarkdown
 
@@ -118,8 +118,8 @@ These quality scores are high, while the quality varies near the ends, all score
 
 |Score|On|Original File|
 |------|----|-------------|
-|PASS |   Per base sequence quality|       21_3G_R2.fastq.gz|
-|PASS|Per base N content|      21_3G_R2.fastq.gz|
+|PASS |   Per base sequence quality| 21_3G_R2|
+|PASS|Per base N content| 21_3G_R2|
 
 ##### 21_3G_R2 N-content
 
@@ -138,8 +138,8 @@ These quality scores are high, while the outliers on the 3' end veer into the ye
 
 |Score|On|Original File|
 |------|----|-------------|
-|PASS| Per base sequence quality|       34_4H_R1.fastq.gz|
-|PASS| Per base N content |     34_4H_R1.fastq.gz|
+|PASS| Per base sequence quality| 34_4H_R1|
+|PASS| Per base N content | 34_4H_R1.fastq.gz|
 
 ##### 34_4H_R1 N-content
 
@@ -157,8 +157,8 @@ These quality scores are high, while the quality varies near the ends, all score
 
 |Score|On|Original File|
 |------|----|-------------|
-|PASS| Per base sequence quality|    34_4H_R2.fastq.gz|
-|PASS| Per base N content |     34_4H_R2.fastq.gz|
+|PASS| Per base sequence quality| 34_4H_R2|
+|PASS| Per base N content | 34_4H_R2|
 
 ##### 34_4H_R2 N-content
 
@@ -175,7 +175,7 @@ These quality scores are high, while the outliers on the 5' and 3' end veer into
 
 ### My qscore script
 
-**Note:** Used Demultiplexing code located at `/home/jujo/bgmp/bioinfo/PS/Demultiplex/Assignment-the-first/part1.py` to create my mean quality-score-by-base files and then I used my Demultiplexing code located at `/home/jujo/bgmp/bioinfo/PS/Demultiplex/Assignment-the-first/part1_graphs.py` to graph said files. 
+**Note:** Used Demultiplexing code located at `../Demultiplex/Assignment-the-first/part1.py` [link](../Demultiplex/Assignment-the-first/part1.py) to create my mean quality-score-by-base files and then I used my Demultiplexing code located at `/home/jujo/bgmp/bioinfo/PS/Demultiplex/Assignment-the-first/part1_graphs.py` [link](../Demultiplex/Assignment-the-first/part1_graphs.py) to graph said files. 
 
 #### Alterations to the original script
 
@@ -184,9 +184,7 @@ This is because R2 in demultiplex was an index file (with record length 8)
 while our R2 is the equivalent to R4 and has a record length of 101. Once I
 fixed this I was ready to run my old code.
 
-I did this in two separate sbatch runs (`qs_plotting_21` and `qs_plotting_34`) to speed this up.
-
-- Both of these scripts are located in the `/home/jujo/bgmp/bioinfo/PS/QAA/output_my_qs_plotting_part1/` folder
+I did this in two separate sbatch runs located in the `/home/jujo/bgmp/bioinfo/PS/QAA/output_my_qs_plotting_part1/` folder ([qs_plotting_21](output_my_qs_plotting_part1/qs_plotting_21.sh) and [qs_plotting_34](output_my_qs_plotting_part1/qs_plotting_21.sh)) to speed this up.
 
 #### 21_3G_R1
 
@@ -203,7 +201,7 @@ Average resident set size (kbytes): 0
 Exit status: 0
 ```
 
-##### 21_3G_R1 Graphs 
+##### 21_3G_R1 Graphs
 
 ```bash
 /usr/bin/time -v python /home/jujo/bgmp/bioinfo/PS/Demultiplex/Assignment-the-first/part1_graphs.py \
@@ -436,13 +434,13 @@ AGATCGGAAGAGCACACGTCTGAACTCCAGTCA,  was indeed our R1 adapter
 
 AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT,  was indeed our R2 adapter :exploding_head:
 
-With both adapters determined, I could move to using cutadapt
+With both adapters determined, I could move to using `cutadapt`
 
 #### Cutadapt Run 
 
 ##### 21_3G percent trimmed
 
-For my cutadapt run I used the following command
+For my `cutadapt` run I used the following command
 
 ```bash
 /usr/bin/time -v cutadapt -a AGATCGGAAGAGCACACGTCTGAACTCCAGTCA -A AGAT
@@ -466,9 +464,8 @@ This run produced the following trimmed proportions
 
 ##### 34_4H percent trimmed
 
-I used the following command
-
 ```bash
+#command
 /usr/bin/time -v cutadapt -a AGATCGGAAGAGCACACGTCTGAACTCCAGTCA -A AGAT
 CGGAAGAGCGTCGTGTAGGGAAAGAGTGT -o output_cutadapt_part2/34_4H_both_S24_L008_R1_001_trimmed.fastq
  -p output_cutadapt_part2/34_4H_both_S24_L008_R2_001_trimmed.fastq /projects/bgmp/shared/2017_s
@@ -483,7 +480,7 @@ Average resident set size (kbytes): 0
 Exit status: 0
  ```
 
-cutadapt produced the following trimmed proportions
+`cutadapt` produced the following trimmed proportions
 
 - 34_4H_R1 proportion trimmed 9.1%
 - 34_4H_R2 proportion trimmed 9.8%
@@ -491,12 +488,10 @@ cutadapt produced the following trimmed proportions
 
 #### Cutadapt interpretation
 
-**Comment on whether you expect R1s and R2s to be adapter-trimmed at different rates and why.**
+- Our `34_4H `files were trimmed **more** than our `21_3G` files
+- Our R2 files were trimmed more than our R1 files. This makes sense because R2 runs last on the sequencer and thus are typically lower quality than R1. This is reflected in our cutadapt results where the percent % increased of trimmed reads is significant.
 
-- Our 34_4H files were trimmed **more** than our 21_3G files
-- Our R2 files were trimmed more than our R1 files. This makes sense because R2 runs last on the sequencer and thus are typically lower quality than R1. This is reflected in our cutadapt results where the percent % increased of trimmed reads is significant. 
-
-With my adapters removed I proceeded to using Trimmomatic
+With my adapters removed I proceeded to using `Trimmomatic`
 
 ### Trimmomatic
 
@@ -545,7 +540,7 @@ To measure the proportion of trimmed reads within our trimmomatic results I did 
 zcat paired_file_path | awk 'NR%4==2{print length($0)}' >file_path_length_distributions.txt
 ```
 
-I then created the python script `trimm_graph.py` to calculate the trimmed
+I then created the python script [trimm_graph.py](output_trimmomatic_plotting_part2/trimm_graph.py) to calculate the trimmed
 proportions (adapter trimming included) and the length distribution graph.
 
 Trimmed proportions were calculated with:
@@ -572,8 +567,6 @@ My graph was calculated with:
 
 R2 files should be adapter trimmed at higher rates than R1 files because R2 files are completed the end of the run. As the run continues reagents and the signal degrades contributing. Signal degradation causes adapter bases to be called in the well over insert bases, causing adapters to be overrepresented. This contributes to the overall lowering of run quality, which we can see from our FASTQ output above.
 
--  This information can be verified on the Illumina website.
-
 ## Part 3
 
 ### Packages installed
@@ -588,7 +581,7 @@ R2 files should be adapter trimmed at higher rates than R1 files because R2 file
   - command used: `conda install htseq`
 
 Can check current state of all packages installed on the QAA conda environment at
-`/home/jujo/bgmp/bioinfo/PS/QAA/general_info/all_packages.txt`
+[all_packages.txt](/home/jujo/bgmp/bioinfo/PS/QAA/general_info/all_packages.txt)
 
 ### Data downloaded
 
@@ -625,7 +618,7 @@ But after speaking with Jules I realized out database is formed with `STAR --run
 
 I spent almost an hour looking for a consensus genome file on ensembl, and I could not find it.
 
-I decided to look through PS8 (where we last used STAR) and I checked my input file there `NAME HERE`
+I decided to look through PS8 (where we last used STAR) and I checked my input file there and found it contained the phrase "primary_assembly"
 
 When I searched for this in my current directory I realized that this primary_assembly was already there
 ![l](general_info/how_could_I_miss_it.png)
@@ -641,11 +634,11 @@ Initally, I was running genome generate with zipped files and recieving cryptic 
 
 Until my run was `oom killed` because I only specified 16 gb in my sbatch script.
 
-Once I increased my memory to 100 GB, STAR run sucessfully producing the following output:
+Once I increased my memory to 100 GB, STAR ran sucessfully producing the following output:
 
 #### Genome generate :angel:
 
-Computation done in the `mouse_genome_part3/star_genome.sh` sbatch script
+Computation done in the [star_genome.sh](mouse_genome_part3/star_genome.sh) sbatch script
 
 ```bash
 STAR --runThreadN 8 --runMode genomeGenerate --genomeDir /home/jujo/bgmp/bioinfo/PS/QAA/mouse_genome_part3/star_genome/ --genomeFastaFiles Mus_musculus.GRCm39.dna_rm.primary_assembly.fa --sjdbGTFfile Mus_musculus.GRCm39.112.gtf
@@ -659,7 +652,7 @@ Exit status: 0
 
 #### Align reads
 
-**Note:** Computation done in `/home/jujo/bgmp/bioinfo/PS/QAA/STAR_mouse_aln_part3/STAR_aln.sh` sbatch script 
+**Note:** Computation done in [STAR_aln.sh](/home/jujo/bgmp/bioinfo/PS/QAA/STAR_mouse_aln_part3/STAR_aln.sh) sbatch script 
 
 I then aligned my **paired** trimmomcatic data against this newly created genomic database
 
@@ -696,7 +689,7 @@ Average resident set size (kbytes): 0
 Exit status: 0
 ```
 
-With this output (`/home/jujo/bgmp/bioinfo/PS/QAA/STAR_mouse_aln_part3/34_4H_mouse_aln`) I was ready to reuse my PS8 script (located at `/home/jujo/bgmp/bioinfo/PS/ps8-jemdhb`)to count paired and unpaired reads. My original script was sound, I just added some argparse to it.
+With this output (`/home/jujo/bgmp/bioinfo/PS/QAA/STAR_mouse_aln_part3/34_4H_mouse_aln/`) I was ready to reuse my PS8 script (located at `/home/jujo/bgmp/bioinfo/PS/ps8-jemdhb/parse_bits.py`)to count paired and unpaired reads. My original script was sound, I just added some argparse to it.
 
 Script run with the same srun as before
 
@@ -744,7 +737,7 @@ That is a a lot of unmapped reads...surely that doesn't mean anything...right?
 
 **Note:** Did not specify an outputfile so my htseq output and slurm logs were combined :skull:
 
-- I parsed out the htseq information with the script `htseq_count_part3/fix_names.py`
+- I parsed out the htseq information with the script [fix_names.py](htseq_count_part3/fix_names.py)
 
 I ran htseq with the following specifications
 
@@ -891,7 +884,7 @@ Exit status: 0
 
 ### Determining strandedness
 
-**Note**: to parse my `htseq` data I created two graphing functions within the script `htseq_count_part3/convince_leslie.py`
+**Note**: to parse my `htseq` data I created two graphing functions within the script [convince_leslie.py](`htseq_count_part3/convince_leslie.py)
 
 - Function `get_counts` to get the number of genes with certain read counts mapped to them and the function
 
