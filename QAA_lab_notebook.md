@@ -177,7 +177,7 @@ These quality scores are high, while the outliers on the 5' and 3' end veer into
 
 ### My qscore script
 
-**Note:** Used Demultiplexing code located at `../Demultiplex/Assignment-the-first/part1.py` [link](../Demultiplex/Assignment-the-first/part1.py) to create my mean quality-score-by-base files and then I used my Demultiplexing code located at `/home/jujo/bgmp/bioinfo/PS/Demultiplex/Assignment-the-first/part1_graphs.py` [link](../Demultiplex/Assignment-the-first/part1_graphs.py) to graph said files. 
+**Note:** Used Demultiplexing code located at `/home/jujo/bgmp/bioinfo/PS/Demultiplex/Assignment-the-first/part1.py` to create my mean quality-score-by-base files and then I used my Demultiplexing code located at `/home/jujo/bgmp/bioinfo/PS/Demultiplex/Assignment-the-first/part1_graphs.py` to graph said files.
 
 #### Alterations to the original script
 
