@@ -434,7 +434,7 @@ R2 files should be adapter trimmed at higher rates than R1 files because R2 file
 
 ## Determining standedness
 
-I propose that both my `21_3G` and `34_4H` libraries are stranded. The reasoning behind this determination is clear once one examines the `htseq-count` output in detail.
+I propose that both my `21_3G` and `34_4H` libraries are stranded, specifically in the reverse direction. The reasoning behind this determination is clear once one examines the `htseq-count` output in detail.
 
 ### 21_3G
 
