@@ -238,7 +238,7 @@ For both R1 and R2, our GC content closely follows the theoretical distribution 
 |R1| TruSeq Adapter, Index 18|	29130|	0.32|
 |R2| Illumina Single End Sequencing Primer|	30251|	0.33|
 
-Though we got a warning for R1 and R2, I would not call this data problematic (even though 21_3G has more overrepresented sequences than 34_4H). Both of our over represented sequences are known adapters, and thus will be captured and trimmed downstream with `cutadapt`. Thus over represented sequences are not an area of concern for our data. 
+Though we got a warning for R1 and R2, I would not call this data problematic (even though `21_3G` has more overrepresented sequences than `34_4H`). Both of our over represented sequences are known adapters, and thus will be captured and trimmed downstream with `cutadapt`. Thus over represented sequences are not an area of concern for our data. 
 
 
 ### Adapter Content	
@@ -281,7 +281,7 @@ Overall, this metric is not a concern with this data. See **FASTQC** section abo
 for more information.
 
 ##### Sequence Length Distribution\
-All sequences were length 101. See ***File assignments** section above for more
+All sequences were length 101. See **File assignments** section above for more
 information.
 
 ##### Sequence duplication levels\
